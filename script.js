@@ -2,8 +2,9 @@ let numDisplay = "0";
 const viewText = document.getElementById("view-text-id");
 viewText.innerHTML = numDisplay;
 
+
 let val1 = 0;
-let val2 = 0;
+let val2 = null;
 let opSelected = false;
 let currentOperator = "none"
 
@@ -11,6 +12,8 @@ createNumListeners();
 clearListener();
 createOPListeners();
 createEquals();
+signToggle();
+deleteKey();
 
 
 /**
@@ -27,6 +30,7 @@ function createNumListeners(){
                 // document.getElementById(currentOperator).style.opacity = "1.0";
             }
             updateDisplay(i.toString());
+            console.log("click");
         })
         document.addEventListener("keydown", (e) => {
             if(e.key === i.toString()){
@@ -60,14 +64,13 @@ function createOPListeners(){
         document.addEventListener("keydown", (e) =>{
             if(e.key === opArray[i]){
                 if (opSelected){
-                    resetCurrentOperatorOpacity();
+                    // resetCurrentOperatorOpacity();
                     currentOperator = opArray[i];
-                    setOperatorOpacity("0.5");
+                    // setOperatorOpacity("0.5");
 
                 }
                 else{
                     currentOperator = operation(opArray[i]);
-                    opElem.style.opacity = "0.5";
                 }
             }
         })
@@ -93,6 +96,8 @@ function clearListener(){
  * @returns {void}
  */
 function updateDisplay(newVal){
+    console.log(numDisplay)
+    console.log(numDisplay.length)
     if (numDisplay.length <= 13){
         numDisplay = (numDisplay === "0") ? newVal : numDisplay + newVal;
         viewText.innerHTML = numDisplay;
@@ -120,11 +125,15 @@ function operation(op){
  */
 function createEquals(){
     document.getElementById("=").addEventListener("click", () =>{
-        equalsLogic();
+        if(currentOperator != "none"){
+            equalsLogic();
+        }
     })
     document.addEventListener("keydown", (e) => {
         if (e.key === "=" || e.key === "Enter"){
-            equalsLogic();
+            if(currentOperator != "none"){
+                equalsLogic();
+            }
         }
     })
 }
@@ -141,26 +150,26 @@ function equalsLogic(){
     switch (currentOperator){
         case "+":
             let sum = val1 + val2;
-            numDisplay = sum;
-            viewText.innerHTML = numDisplay;
+            numDisplay = sum.toString();
+            viewText.innerHTML = numDisplay
             ans = sum;
             break;
         case "-":
             let diff = val1 - val2;
-            numDisplay = diff;
-            viewText.innerHTML = numDisplay;
+            numDisplay = diff.toString();
+            viewText.innerHTML = numDisplay
             ans = diff;
             break;
         case "x":
             let prod = val1 * val2;
-            numDisplay = prod;
-            viewText.innerHTML = numDisplay;
+            numDisplay = prod.toString();
+            viewText.innerHTML = numDisplay.toString();
             ans = prod
             break;
         case "/":
             let quot = val1 / val2;
-            numDisplay = quot;
-            viewText.innerHTML = numDisplay;
+            numDisplay = quot.toString();
+            viewText.innerHTML = numDisplay.toString();
             ans = quot
             break;
         }
@@ -178,12 +187,27 @@ function reset(){
     val1 = 0;
     val2 = 0;
     opSelected = false;
-    updateDisplay("0");
     if (currentOperator != "none"){
-        resetCurrentOperatorOpacity();
+        // resetCurrentOperatorOpacity();
     }
     currentOperator = "none";
     
+}
+
+function signToggle(){
+    document.getElementById("+/-").addEventListener("click", () => {
+        numDisplay = ((parseInt(numDisplay)) * -1).toString();
+        viewText.innerHTML = numDisplay;
+    })
+}
+
+function deleteKey(){
+    document.addEventListener("keydown", (e) =>{
+        if (e.key === "Delete" || e.key === 'Backspace'){
+            numDisplay = (numDisplay.length === 1 || (numDisplay.length === 2 && numDisplay.substring(0, 1) === "-")) ? "0" : numDisplay.substring(0, numDisplay.length-1);
+            viewText.innerHTML = numDisplay;
+        }
+    })
 }
 
 function resetCurrentOperatorOpacity(){

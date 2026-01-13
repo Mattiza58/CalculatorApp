@@ -125,13 +125,13 @@ function operation(op){
  */
 function createEquals(){
     document.getElementById("=").addEventListener("click", () =>{
-        if(currentOperator != "none"){
+        if(currentOperator !== "none"){
             equalsLogic();
         }
     })
     document.addEventListener("keydown", (e) => {
         if (e.key === "=" || e.key === "Enter"){
-            if(currentOperator != "none"){
+            if(currentOperator !== "none"){
                 equalsLogic();
             }
         }
@@ -187,7 +187,7 @@ function reset(){
     val1 = 0;
     val2 = 0;
     opSelected = false;
-    if (currentOperator != "none"){
+    if (currentOperator !== "none"){
         // resetCurrentOperatorOpacity();
     }
     currentOperator = "none";

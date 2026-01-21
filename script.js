@@ -2,6 +2,10 @@ let numDisplay = "0";
 const viewText = document.getElementById("view-text-id");
 viewText.innerHTML = numDisplay;
 
+const a = parseFloat("0.1") + parseFloat("0.2");
+console.log(a.toPrecision(12))
+console.log(parseFloat(a));
+
 
 let val1 = 0;
 let val2 = null;
@@ -14,6 +18,7 @@ createOPListeners();
 createEquals();
 signToggle();
 deleteKey();
+pointKey();
 
 
 /**
@@ -113,7 +118,7 @@ function updateDisplay(newVal){
  */
 function operation(op){
     opSelected = true;
-    val1 = parseInt(numDisplay);
+    val1 = parseFloat(numDisplay);
     numDisplay = "0";
     console.log("val1: "+ val1)
     return op;
@@ -144,7 +149,7 @@ function createEquals(){
  * @returns {void}
  */
 function equalsLogic(){
-    val2 = parseInt(numDisplay);
+    val2 = parseFloat(numDisplay);
     let ans = 0;
     console.log("val2: " + val2)
     switch (currentOperator){
@@ -196,7 +201,7 @@ function reset(){
 
 function signToggle(){
     document.getElementById("+/-").addEventListener("click", () => {
-        numDisplay = ((parseInt(numDisplay)) * -1).toString();
+        numDisplay = ((parseFloat(numDisplay)) * -1).toString();
         viewText.innerHTML = numDisplay;
     })
 }
@@ -205,6 +210,19 @@ function deleteKey(){
     document.addEventListener("keydown", (e) =>{
         if (e.key === "Delete" || e.key === 'Backspace'){
             numDisplay = (numDisplay.length === 1 || (numDisplay.length === 2 && numDisplay.substring(0, 1) === "-")) ? "0" : numDisplay.substring(0, numDisplay.length-1);
+            viewText.innerHTML = numDisplay;
+        }
+    })
+}
+
+function pointKey(){
+    document.getElementById(".").addEventListener("click", () =>{
+        numDisplay += ".";
+        viewText.innerHTML = numDisplay;
+    })
+    document.addEventListener("keydown", (e) =>{
+        if (e.key === "."){
+            numDisplay += ".";
             viewText.innerHTML = numDisplay;
         }
     })

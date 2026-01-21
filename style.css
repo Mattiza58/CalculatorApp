@@ -19,7 +19,7 @@ header{
     justify-content: center;
     width: 1fr;
     height: 500px;
-    /* background-color: skyblue; */
+    background-color: skyblue;
     align-items: center;
 }
 

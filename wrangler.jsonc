@@ -1,0 +1,6 @@
+{
+  "name": "my-static-site",
+  "assets": { "directory": "./dist" }, // Point this to your build folder (e.g., dist, build, or out)
+  "compatibility_date": "2026-01-29"
+}
+

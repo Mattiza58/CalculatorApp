@@ -11,6 +11,11 @@ let val1 = 0;
 let val2 = null;
 let opSelected = false;
 let currentOperator = "none"
+let lightToggle = false;
+
+const numText = document.getElementsByClassName("button-text");
+const numButtons = document.getElementsByClassName("number-box");
+const settingButtons = document.getElementsByClassName("settings-box");
 
 createNumListeners();
 clearListener();
@@ -19,6 +24,7 @@ createEquals();
 signToggle();
 deleteKey();
 pointKey();
+lightModeToggle();
 
 
 /**
@@ -226,6 +232,43 @@ function pointKey(){
             viewText.innerHTML = numDisplay;
         }
     })
+}
+
+function lightModeToggle(){
+    document.getElementById("light-icon").addEventListener("click", () =>{
+        if (!lightToggle){
+            document.body.style.backgroundColor = "#FFFFFF";
+            document.getElementById("h1").style.color = "#000000";
+            for (let i = 0; i < numText.length; i++){
+                numText[i].style.color = "#000000";
+            }
+            changeButtonProperty(numButtons, "#fff4f4", "#cac7c7");
+            changeButtonProperty(settingButtons,"#e5e5e5", "#cac7c7");
+            document.getElementsByClassName("view-box")[0].style.backgroundColor = "#c8c8c8";
+            document.getElementsByClassName("view-text")[0].style.color = "#000000";
+            lightToggle = !lightToggle;
+        }
+        else if (lightToggle) {
+            console.log("clicked toggle")
+            document.body.style.backgroundColor = "rgb(35,35,35)"
+            document.getElementById("h1").style.color = "#FFFFFF";
+            for (let i = 0; i < numText.length; i++){
+                numText[i].style.color = "#FFFFFF";
+            }
+            changeButtonProperty(numButtons, "rgb(107, 105, 105)", "#000000");
+            changeButtonProperty(settingButtons, "rgb(76, 76, 76)", "#000000");
+            document.getElementsByClassName("view-box")[0].style.backgroundColor = "rgb(44, 44, 44)";
+            document.getElementsByClassName("view-text")[0].style.color = "#FFFFFF"
+            lightToggle = !lightToggle;
+        }
+    })
+}
+
+function changeButtonProperty(buttonArray, bgColor, borderColor){
+    for (let i = 0; i < buttonArray.length; i++){
+        buttonArray[i].style.backgroundColor = bgColor;
+        buttonArray[i].style.borderColor = borderColor;
+    }
 }
 
 function resetCurrentOperatorOpacity(){
